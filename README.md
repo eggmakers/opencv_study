@@ -84,3 +84,39 @@ a - b
 `result = cv2.divide(a, b)`
 
 ![a+b](F:/Users/14024/Desktop/python_opencv学习/result/result7 = cv2.divide(img1).png)
+
+### 图像的逻辑计算
+
+#### 按位与计算
+
+真值表
+
+| 输入值a | 输入值b | 输出结果 |
+| :-----: | :-----: | :------: |
+|    0    |    0    |    0     |
+|    0    |    1    |    0     |
+|    1    |    0    |    0     |
+|    1    |    1    |    1     |
+
+`result = cv2.bitwise_and(src1,src2)`
+
+<img src="F:/Users/14024/Desktop/python_opencv学习/result/img1.png" alt="a+b" style="zoom:33%;" />
+
+<img src="F:/Users/14024/Desktop/python_opencv学习/result/img2.png" alt="a+b" style="zoom:33%;" />
+
+![a+b](F:/Users/14024/Desktop/python_opencv学习/result/img3.png)
+
+#### 按位或计算
+
+真值表
+
+| 输入a | 输入b | 输出结果 |
+| :---: | :---: | :------: |
+|   0   |   0   |    0     |
+|   0   |   1   |    1     |
+|   1   |   0   |    1     |
+|   1   |   1   |    1     |
+
+`result = cv2.bitwise_or(src1,src2)`
+
+![a+b](F:/Users/14024/Desktop/python_opencv学习/result/img1.png)
