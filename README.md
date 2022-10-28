@@ -181,3 +181,88 @@ cv2.waitKey()
 ```
 
 ![a+b](F:/Users/14024/Desktop/python_opencv学习/result/result.png)
+
+#### 练习见代码
+
+## 数字图像的几何运算
+
+### 图像平移
+
+`dst = cv2.warpAffine(src,M,dsize[,flags[,borderMode[,borderValue]]])`
+
+src为输入图像
+
+M为变换矩阵，反映平移或旋转
+
+dsize为输出图像大小
+
+flags为插值方法（见下表）
+
+borderMode为边界像素模式
+
+borderValue为边界像素填充值
+
+|             类型             |                     说明                     |
+| :--------------------------: | :------------------------------------------: |
+|      cv2.INTER_NEAREST       |                  最近邻插值                  |
+|       cv2.INTER_LINEAR       |              双线性插值（默认）              |
+|       cv2.INTER_CUBIC        |                 三次样条插值                 |
+|        cv2.INTER_AREA        | 区域插值，根据周边像素值实现当前像素点的采样 |
+|    cv2.INTER_LINEAR_EXACT    |               位精确双线性插值               |
+|        cv2.INTER_MAX         |                 插值编码掩码                 |
+| cv2.INTER_WARP_FILL_OUTLIERS |              标志，填补所有像素              |
+|     cv2.WARP_INVERSE_MAP     |                    逆变换                    |
+
+转换矩阵如下：
+
+向上平移：(把它想象成一个矩阵)
+
+|  1   |  0   | t_x  |
+| :--: | :--: | :--: |
+|  0   |  1   | t_y  |
+
+<img src="F:/Users/14024/Desktop/python_opencv学习/result/New_picture.png" alt="a+b" style="zoom:33%;" />
+
+<img src="F:/Users/14024/Desktop/python_opencv学习/result/New_picture1.png" alt="a+b" style="zoom:33%;" />
+
+### 仿射变换的类型
+
+`M = cv2.getAffineTransform(src, dst)`
+
+src为原始图像的三点坐标
+
+dst为变换三点的坐标
+
+M为仿射变换矩阵
+
+![a+b](F:/Users/14024/Desktop/python_opencv学习/result/Figure_1.png)
+
+### 图像缩放
+
+`dst = cv2.resize(src, dsize[,fx[,fy[,interpolation]]])`
+
+这个就不说了，几乎每个程序都用，快背下来了
+
+### 图像旋转
+
+`M = cv2.getRotationMatrix2D(center, angle, scale)`
+
+center:旋转中心
+
+angle:旋转角度
+
+scale:缩放比例以及旋转方向，正数为逆时针，负数为顺时针
+
+<img src="F:/Users/14024/Desktop/python_opencv学习/result/Image rotation1.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/python_opencv学习/result/Image rotation2.png" alt="a+b" style="zoom:50%;" />
+
+### 图像剪切
+
+#### 规则剪切
+
+按矩形进行剪切
+
+`img = img[a:b, c:d]`
+
+#### 不规则剪切
+
+见程序
