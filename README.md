@@ -375,3 +375,74 @@ dsize为输出图像的尺寸
 
 #### 数据点坐标系间的转换
 
+```python
+import imp
+
+
+import math
+import cv2
+import numpy as np
+
+x, y = 3, 5
+print('直角坐标x = ',x, '\n 直角坐标y = ',y)
+#mash库函数计算
+center = [0, 0]                                                         #中心点
+r = math.sqrt(math.pow(x - center[0], 2) + math.pow(y - center[1], 2))
+theta = math.atan2(y - center[1], x - center[0]) / math.pi * 180        #转换为角度
+print('math库r = ',r)
+print('math库theta = ',theta)
+
+#OpenCV也提供了及坐标变换的函数
+x1 = np.array(x, np.float32)
+y1 = np.array(y, np.float32)
+#变换中心为原点，若想为（2，3）需x1-2,y1-3
+r1, theta1 = cv2.cartToPolar(x1, y1, angleInDegrees = True)
+print('OpenCV库函数r1 = ',r1)
+print('OpenCV库函数theta1 = ',theta1)
+
+#反变换
+x1,y1 = cv2.polarToCart(r1, theta1, angleInDegrees = True)
+print('极坐标变为笛卡尔坐标x = ',np.round(x1[0]))
+print('极坐标变为笛卡尔坐标y = ',np.round(y1[0]))
+```
+
+#### 图像数据坐标系间的转换
+
+`dst = cv2.LogPolar(src, center, M, int flags = CV2_INTER_LINEAR + CV2_WARP_FILL_OUTLIERS)`
+
+center:直角坐标变换时直角坐标的原点坐标
+
+M:幅度比例参数
+
+flags:插值方法（CV_WARP_FILL_OUTLIERS表示填充所有目标图像像素）
+
+![a+b](F:/Users/14024/Desktop/python_opencv学习/result/log_polar.png)
+
+[^对数极坐标系5*5]: 对数变换
+
+![a+b](F:/Users/14024/Desktop/python_opencv学习/result/linear_polar.png)
+
+[^线性极坐标系的5*5]: 线性变换
+
+#### 视频图像坐标系间的转换
+
+`dst = cv2.warpPolar(src, dsize, center, maxRadius, flags)`
+
+dsize:输出图像的尺寸
+
+center:极坐标的原点坐标
+
+maxRadius:变换时边界圆的半径
+
+flags:插值法
+
+|     标志参数      |       作用       |
+| :---------------: | :--------------: |
+| WARP_POLAR_LINEAR |    极坐标变换    |
+|  WARP_POLAR_LOG   | 半对数极坐标变换 |
+| WARP_INVERSE_MAP  |      逆变换      |
+
+运行有问题，不打算查清
+
+#### 练习见代码
+
