@@ -39,3 +39,10 @@ def random_noise(img, noise_num):
         img_noise[x, y, :] = 255
     return img_noise
 
+def poisson_noise(img, vals):
+    #泊松噪声
+    vals = len(np.unique(img))
+    vals = 2 ** np.ceil(np.log2(vals))
+    noisy = np.random.poisson(img * vals) / float(vals)
+    return noisy
+
