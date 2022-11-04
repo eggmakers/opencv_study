@@ -561,3 +561,13 @@ histSize为BIN计数
 
 ranges为范围，通常为[0,256]
 
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Figure_11.png)
+
+#### 自定义函数实现直方图均衡化
+
+代码有问题，不打算处理
+
+#### 使用OpenCV函数实现直方图均衡化
+
+`dst = cv2.equalizeHist(src)`
+
