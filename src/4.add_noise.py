@@ -29,3 +29,13 @@ def sp_noise(img, prob):
                 img_noise[i][j] = img[i][j]
     return img_noise
 
+def random_noise(img, noise_num):
+    #随机噪声 noise_num:噪声点数目
+    img_noise = img
+    rows, cols, chn = img_noise.shape
+    for i in range(noise_num):
+        x = np.random.randint(0, rows)
+        y = np.random.randint(0, cols)
+        img_noise[x, y, :] = 255
+    return img_noise
+
