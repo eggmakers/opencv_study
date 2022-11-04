@@ -507,5 +507,57 @@ $$
 
 ### 图像噪声
 
-#### 高斯噪声
+#### 通过Numpy数组添加噪声
+
+##### 高斯噪声
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/gasuss.png)
+
+##### 椒盐噪声
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/sp.png)
+
+##### 随机噪声
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/random.png)
+
+#### 通过skimage库添加噪声
+
+| 模块         | 功能                                     |
+| ------------ | ---------------------------------------- |
+| io           | 读取，保存和显示图像或视频               |
+| data         | 提供测试图像和样本数据                   |
+| color        | 颜色空间变换                             |
+| filters      | 图像增强，边缘检测，排序滤波器，自动阈值 |
+| draw         | 画图                                     |
+| transform    | 几何变换                                 |
+| morphology   | 形态学操作                               |
+| exposure     | 图像强度调整                             |
+| feature      | 特征提取                                 |
+| measure      | 图像属性测量                             |
+| segmentation | 图像分割                                 |
+| restoration  | 图像恢复                                 |
+| util         | 通用函数                                 |
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Figure_8.png)
+
+### 直方图均衡化
+
+#### 使用Matplotlib库绘制图像直方图
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Figure_9.png)
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Figure_10.png)
+
+#### 使用OpenCV中的函数绘制直方图
+
+`hist = cv2.calcHist(img, ch, mask, histSize, ranges [, accumulate])`
+
+ch为通道的索引，[0]为直方图，[1],[2],[3]为BGR的通道
+
+mask为图像掩码，完整的图像为None
+
+histSize为BIN计数
+
+ranges为范围，通常为[0,256]
 
