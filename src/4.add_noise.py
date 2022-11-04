@@ -13,3 +13,19 @@ def gasuss_noise(img, mean=0, var=0.01):
     img_noise = np.clip(img_noise, low_clip, 1.0)
     img_noise = np.uint8(img_noise * 255)
     return img_noise
+
+def sp_noise(img, prob):
+    #椒盐噪声 prob：噪声比例
+    img_noise = np.zeros(img.shape, np.uint8)
+    thres = 1 - prob
+    for i in range(img.shape[0]):
+        for j in range(img.shape[1]):
+            rNum = np.random.random()
+            if rNum < prob:
+                img_noise[i][j] = 0
+            elif rNum > thres:
+                img_noise[i][j] = 255
+            else:
+                img_noise[i][j] = img[i][j]
+    return img_noise
+
