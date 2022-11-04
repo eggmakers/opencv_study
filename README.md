@@ -571,3 +571,8 @@ ranges为范围，通常为[0,256]
 
 `dst = cv2.equalizeHist(src)`
 
+<img src="F:/Users/14024/Desktop/opencv_study/result/均衡化直方图.png" alt="a+b" style="zoom:33%;" />
+
+
+
+![](F:\Users\14024\Desktop\opencv_study\result\原始灰度直方图.png)
