@@ -1,4 +1,4 @@
-# python_opencv学习
+# opencv_study
 
 ## 数字图形的获取和基本运算
 
@@ -33,11 +33,11 @@
 
 `cv2.add()`
 
-![add](F:/Users/14024/Desktop/python_opencv学习/result/result1 = cv2.add(img1,img2).png)
+![add](F:/Users/14024/Desktop/opencv_study/result/result1 = cv2.add(img1,img2).png)
 
 `a+b`
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/result2 = img1 + img2.png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/result2 = img1 + img2.png)
 
 图像融合算法如下：
 
@@ -61,29 +61,29 @@ gamma为调亮度
 
 dtype为可选深度，默认为-1
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/result3 = cv2.addWeighted(img1+img2).png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/result3 = cv2.addWeighted(img1+img2).png)
 
 #### 减法计算
 
 `dst = cv2.subtract(src1,src2)#减法计算`
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/result5 = cv2.subtract(img1+img2).png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/result5 = cv2.subtract(img1+img2).png)
 
 a - b
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/result4 = img1 - img2.png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/result4 = img1 - img2.png)
 
 #### 乘法计算
 
 `result =  np.dot(a, b)`
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/result6 = cv2.multiply(img1).png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/result6 = cv2.multiply(img1).png)
 
 #### 除法计算
 
 `result = cv2.divide(a, b)`
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/result7 = cv2.divide(img1).png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/result7 = cv2.divide(img1).png)
 
 ### 图像的逻辑计算
 
@@ -100,11 +100,11 @@ a - b
 
 `result = cv2.bitwise_and(src1,src2)`
 
-<img src="F:/Users/14024/Desktop/python_opencv学习/result/img1.png" alt="a+b" style="zoom:33%;" />
+<img src="F:/Users/14024/Desktop/opencv_study/result/img1.png" alt="a+b" style="zoom:33%;" />
 
-<img src="F:/Users/14024/Desktop/python_opencv学习/result/img2.png" alt="a+b" style="zoom:33%;" />
+<img src="F:/Users/14024/Desktop/opencv_study/result/img2.png" alt="a+b" style="zoom:33%;" />
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/img3.png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/img3.png)
 
 #### 按位或计算
 
@@ -119,7 +119,7 @@ a - b
 
 `result = cv2.bitwise_or(src1,src2)`
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/img4.png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/img4.png)
 
 #### 按位非运算
 
@@ -132,7 +132,7 @@ a - b
 
 
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/img5.png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/img5.png)
 
 #### 按位异或运算
 
@@ -145,7 +145,7 @@ a - b
 |    1    |    0    |    1     |
 |    1    |    1    |    0     |
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/img6.png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/img6.png)
 
 #### 综合示例
 
@@ -180,7 +180,7 @@ cv2.imshow("Result",img1)
 cv2.waitKey()
 ```
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/result.png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/result.png)
 
 #### 练习见代码
 
@@ -221,9 +221,9 @@ borderValue为边界像素填充值
 | :--: | :--: | :--: |
 |  0   |  1   | t_y  |
 
-<img src="F:/Users/14024/Desktop/python_opencv学习/result/New_picture.png" alt="a+b" style="zoom:33%;" />
+<img src="F:/Users/14024/Desktop/opencv_study/result/New_picture.png" alt="a+b" style="zoom:33%;" />
 
-<img src="F:/Users/14024/Desktop/python_opencv学习/result/New_picture1.png" alt="a+b" style="zoom:33%;" />
+<img src="F:/Users/14024/Desktop/opencv_study/result/New_picture1.png" alt="a+b" style="zoom:33%;" />
 
 ### 仿射变换的类型
 
@@ -235,7 +235,7 @@ dst为变换三点的坐标
 
 M为仿射变换矩阵
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/Figure_1.png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Figure_1.png)
 
 ### 图像缩放
 
@@ -253,7 +253,7 @@ angle:旋转角度
 
 scale:缩放比例以及旋转方向，正数为逆时针，负数为顺时针
 
-<img src="F:/Users/14024/Desktop/python_opencv学习/result/Image rotation1.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/python_opencv学习/result/Image rotation2.png" alt="a+b" style="zoom:50%;" />
+<img src="F:/Users/14024/Desktop/opencv_study/result/Image rotation1.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Image rotation2.png" alt="a+b" style="zoom:50%;" />
 
 ### 图像剪切
 
@@ -351,7 +351,7 @@ src为输入图像
 
 flipCode为翻转方向，0表示绕x轴旋转，1表示绕y轴旋转，-1表示绕x轴，y轴两个轴旋转，即中心旋转
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/Figure_2.png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Figure_2.png)
 
 ### 图像的透视变换
 
@@ -369,7 +369,7 @@ M为生成的透视变换矩阵
 
 dsize为输出图像的尺寸
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/Figure_3.png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Figure_3.png)
 
 ### 图像的极坐标变换
 
@@ -416,11 +416,11 @@ M:幅度比例参数
 
 flags:插值方法（CV_WARP_FILL_OUTLIERS表示填充所有目标图像像素）
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/log_polar.png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/log_polar.png)
 
 [^对数极坐标系5*5]: 对数变换
 
-![a+b](F:/Users/14024/Desktop/python_opencv学习/result/linear_polar.png)
+![a+b](F:/Users/14024/Desktop/opencv_study/result/linear_polar.png)
 
 [^线性极坐标系的5*5]: 线性变换
 
@@ -445,4 +445,67 @@ flags:插值法
 运行有问题，不打算查清
 
 #### 练习见代码
+
+## 图像空域增强
+
+### 灰度线性变换
+
+|   k   |    b    |     图像变换     |
+| :---: | :-----: | :--------------: |
+|   1   |    0    |     原始图像     |
+|   1   | 不等于0 | 灰度值增加或降低 |
+|  -1   |   255   |    灰度值反转    |
+|  >1   |    -    |    对比度增强    |
+| [0,1] |    -    |    对比度削弱    |
+|  <0   |    -    |     图像求补     |
+
+
+
+#### 用OPENCV做灰度变换与颜色空间变换
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Figure_4.png)
+
+#### 增加或降低图像亮度
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin Image.png" alt="a+b" style="zoom: 25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/UP Gray.png" alt="a+b" style="zoom: 25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Down Gray.png" alt="a+b" style="zoom: 25%;" />
+
+#### 增强或减弱图像对比度
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Gray.png" alt="a+b" style="zoom: 25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Enhancement.png" alt="a+b" style="zoom: 25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Reduction.png" alt="a+b" style="zoom: 25%;" />
+
+#### 图像反色变换
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin Image.png" alt="a+b" style="zoom: 25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Color_change.png" alt="a+b" style="zoom: 25%;" />
+
+彩色图像反色
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/RGB.png" alt="a+b" style="zoom: 25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Color_change_RGB.png" alt="a+b" style="zoom: 25%;" />
+
+### 非线性变换
+
+#### 对数变换
+
+$$
+g(x,y)=c*log(1+f(x,y))
+$$
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Figure_5.png" alt="a+b" style="zoom:25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Origin.png" alt="a+b" style="zoom:25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/LOG CHG.png" alt="a+b" style="zoom:25%;" />
+
+#### 伽马变换
+
+$$
+g(x,y)=c*f(x,y)^r
+$$
+
+|  r   |                  图像变换                  |
+| :--: | :----------------------------------------: |
+|  >1  | 拉伸灰度级较高的区域，压缩灰度级较低的部分 |
+|  <1  | 拉伸灰度级较低的区域，压缩灰度级较高的部分 |
+|  =1  |                  线性变换                  |
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Figure_6.png" alt="a+b" style="zoom:25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Figure_7.png" alt="a+b" style="zoom:25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Origin1.png" alt="a+b" style="zoom:25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Gamma 》1.png" alt="a+b" style="zoom:25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Gamma 《 1.png" alt="a+b" style="zoom:25%;" />
+
+### 图像噪声
+
+#### 高斯噪声
 
