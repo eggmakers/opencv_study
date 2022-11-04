@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import math
 
 def gasuss_noise(img, mean=0, var=0.01):
     #高斯噪声，mean：均值；var：方差
@@ -39,10 +40,50 @@ def random_noise(img, noise_num):
         img_noise[x, y, :] = 255
     return img_noise
 
-def poisson_noise(img, vals):
+def poisson_noise(img):
     #泊松噪声
     vals = len(np.unique(img))
     vals = 2 ** np.ceil(np.log2(vals))
     noisy = np.random.poisson(img * vals) / float(vals)
     return noisy
 
+def speckle_noise(img, gauss):
+    #乘性噪声 out = image + n x image
+    row,col,ch = img.shape
+    gauss = np.random.randn(row, col, ch)
+    gauss = gauss.reshape(row, col, ch)
+    noise = img + img * gauss
+    return noise
+
+def rayleigh_noise(img):
+    #瑞利噪声
+    a = -0.2
+    b = 0.03
+    row,col,ch = img.shape
+    n_reyleigh = a + (-b * math.log(1 - np.random.randn(row, col))) ** 0.5
+    return n_reyleigh
+
+def Gamma_noise(img):
+    #伽马噪声
+    a = 25
+    b = 3
+    row,col,ch = img.shape
+    n_gamma = np.zeros(row, col)
+    for i in range(b):
+        n_gamma = n_gamma + (-1 / a) * math.log(1 - np.random.randn(row, col))
+    return n_gamma
+
+img = cv2.imread("picture_material/beauty_leg3.jpg")
+img = cv2.resize(img, ((int(img.shape[1]/2), int(img.shape[0]/2))), interpolation=cv2.INTER_AREA)
+cv2.imshow("origin", img)
+
+img_gasuss = gasuss_noise(img, mean = 0, var = 0.01)
+cv2.imshow("gasuss", img_gasuss)
+
+img_sp = sp_noise(img, 0.06)
+cv2.imshow("sp", img_sp)
+
+img_random_noise = random_noise(img, 1000)
+cv2.imshow("random", img_random_noise)
+
+cv2.waitKey()
