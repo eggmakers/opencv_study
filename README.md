@@ -609,3 +609,40 @@ titleGridSize:均衡化的网格大小
 <img src="F:/Users/14024/Desktop/opencv_study/result/Target.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Origin3.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Specification Img.png" alt="a+b" style="zoom: 33%;" />
 
 效果出奇的好
+
+#### 直方图反向投影
+
+`dst = cv2.normalize(src, dst, alpha, beta, norm, dtype)`
+
+src：输入数组
+
+dst：输出数组
+
+alpha：范围下限
+
+beta：范围上限
+
+norm：范式-规定化类型。
+
+​	NORM_MINMAX：线性归一化
+
+​	NORM_INF：无穷范数
+
+​	NORM_L1：1范数
+
+​	NORM_L2：2范数
+
+dtype：规定信道数和深度
+
+`dst = cv2.calcBackProject(image, channels, hist, ranges, scale)`
+
+channels：信道
+
+hist：直方图
+
+ranges：变化范围
+
+scale：比例因子
+
+效果成谜，问题出在值上
+
