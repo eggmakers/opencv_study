@@ -646,3 +646,124 @@ scale：比例因子
 
 效果成谜，问题出在值上
 
+## 图像空域滤波
+
+### 空域滤波
+
+#### 线性空域滤波
+
+$$
+g(x,y)=\sum_{s=-a}^a\sum_{t=-b}^bw(s,t)f(x+s,y+t)
+$$
+
+其中
+$$
+a=\frac{m-1}{2},b=\frac{n-1}{2}
+$$
+
+#### 非线性空域滤波
+
+1）忽略边界像素
+
+2）保留原边界像素
+
+### 图像平滑
+
+#### 均值滤波
+
+`dst = cv2.blur(src, ksize, anchor = None, brderType = None)`
+
+ksize:表示滤波卷积核的大小
+
+anchor:图像处理的锚点，默认为(-1,-1)
+
+borderType:边界处理方式。
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin4.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/N = 3.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/N = 7.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/N = 15.png" alt="a+b" style="zoom: 40%;" />
+
+#### 方框滤波
+
+`dst = cv2.boxFilter(src, ddopth, ksize, anchor, normalize, borderType)`
+
+ddepth为处理结果图像的图像深度
+
+ksize为滤波核的大小
+
+normalize为是否归一化处理
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin5.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/n = 0.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/n = 1.png" alt="a+b" style="zoom: 40%;" />
+
+#### 高斯滤波
+
+`dst = cv2.GaussianBlur(src, ksize, sigmaX, sigmaY, borderType = None)`
+
+ksize为卷积核大小，必须是奇数
+
+sigmaX为卷积核水平方向的权重
+
+sigmaY为卷积和垂直方向的权重
+
+borderType为边界处理方式
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin5.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/N = 3 Gauss.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/N = 7 Gauss.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/N = 15 Gauss.png" alt="a+b" style="zoom: 40%;" />
+
+#### 中值滤波
+
+`dst = cv2.medianBlur(size, ksize)`
+
+ksize为卷积核大小
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin5.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/N = 3 median.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/N = 7 median.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/N = 15 median.png" alt="a+b" style="zoom: 40%;" />
+
+#### 双边滤波
+
+`dst = cv2.bilateralFilter(src, d, sigmaColor, sigmaSpace, borderType)`
+
+d:滤波时选取的空间距离
+
+sigmaColor:色差范围
+
+sigmaSpace：滤波点数，值越大，滤波点越多
+
+borderType：边界处理方式
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin5.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/BF1.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/BF2.png" alt="a+b" style="zoom: 40%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/BF3.png" alt="a+b" style="zoom: 40%;" />
+
+### 图像锐化
+
+#### 拉普拉斯滤波
+
+`dst = cv2.Laplacian(src, ddepth[,ksize[, scale[, delta[, borderType]]]])`
+
+ddepth：图像深度：CV_8U,CV_16U,CV_16S,CV_32F,CV_64F
+
+ksize：算子的大小
+
+delta：可选的增量
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin6.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Laplacian.png" alt="a+b" style="zoom: 50%;" />
+
+#### 自定义卷积核滤波
+
+`dst = cv2.filter2D(src, ddepth, kernel[, anchor[, delta[, borderType]]])`
+
+kernel:卷积核
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin1.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/K3.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/K5.png" alt="a+b" style="zoom: 50%;" />
+
+#### 非锐化掩模和高频提升滤波
+
+$$
+g_{mask}(x,y)=f(x,y)-\overline{f}(x,y)
+$$
+
+$$
+g(x,y)=f(x,y)+k*g_{mask}(x,y)
+$$
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin7.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Unsharp mask.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/High freq.png" alt="a+b" style="zoom: 50%;" />
+
+## 图像频域滤波
+
+### 傅里叶变换
+
