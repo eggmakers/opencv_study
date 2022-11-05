@@ -467,7 +467,7 @@ flags:插值法
 
 #### 增加或降低图像亮度
 
-<img src="F:/Users/14024/Desktop/opencv_study/result/Origin Image.png" alt="a+b" style="zoom: 25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/UP Gray.png" alt="a+b" style="zoom: 25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Down Gray.png" alt="a+b" style="zoom: 25%;" />
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin Image.png" alt="a+b" style="zoom: 25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/UP Gray.png" alt="a+b" style="zoom: 25%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Down_Gray.png" alt="a+b" style="zoom: 25%;" />
 
 #### 增强或减弱图像对比度
 
@@ -571,8 +571,41 @@ ranges为范围，通常为[0,256]
 
 `dst = cv2.equalizeHist(src)`
 
-<img src="F:/Users/14024/Desktop/opencv_study/result/均衡化直方图.png" alt="a+b" style="zoom:33%;" />
+<img src="F:\Users\14024\Desktop\opencv_study\result\原始灰度直方图.png" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/均衡化直方图.png" alt="a+b" style="zoom: 50%;" />
 
 
 
-![](F:\Users\14024\Desktop\opencv_study\result\原始灰度直方图.png)
+<img src="F:/Users/14024/Desktop/opencv_study/result/Gray1.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/EqualizeHist.png" alt="a+b" style="zoom: 50%;" />
+
+#### 自适应直方图均衡化
+
+`dst = cv2.createCLAHE(clipLimit, titleGridSize)`
+
+clipLimit:颜色对比度阈值
+
+titleGridSize:均衡化的网格大小
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/原始直方图.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/自适应直方图均衡化.png" alt="a+b" style="zoom: 50%;" />
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/origin.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/CLAHE.png" alt="a+b" style="zoom: 50%;" />
+
+### 直方图规定化
+
+#### 自定义映像函数实现直方图规定化
+
+效果不是很好
+
+| 参考图 | 输入图 | 输出图 |
+| ------ | ------ | ------ |
+
+
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Reference Img.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Input Img.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Output Img.png" alt="a+b" style="zoom: 50%;" />
+
+彩色图直方图规定化
+| 参考图 | 输入图 | 输出图 |
+| ------ | ------ | ------ |
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Target.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Origin3.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Specification Img.png" alt="a+b" style="zoom: 33%;" />
+
+效果出奇的好
