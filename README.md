@@ -809,3 +809,57 @@ flags:
 
 #### 理想低通滤波
 
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Figure_12.png)
+
+#### 巴特沃斯低通滤波
+
+$$
+H(u,v)=\frac{1}{1+(D(u,v)/D_0)^{2n}}
+$$
+
+
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Img3.png)
+
+#### 高斯低通滤波
+
+$$
+H(u,v)=e^{\frac{-D^2(u,v)}{2D_0^2}}
+$$
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/高斯低通滤波.png)
+
+### 高通滤波
+
+#### 理想高通滤波
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Ideal_high_pass.png)
+
+#### 巴特沃斯高通滤波
+
+$$
+H(u,v)=1-\frac{1}{1+(D(u,v)/D_0)^{2n}}
+$$
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/buttworth_high.png)
+
+#### 高斯高通滤波
+
+$$
+H(u,v)=1-e^{\frac{-D^2(u,v)}{2D_0^2}}
+$$
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/gas_high.png)
+
+#### 带通和带阻滤波
+
+#### 带通滤波
+
+保留一范围的频率，其他信息滤掉
+
+理想带通滤波器
+
+巴特沃斯带通滤波器
+
+高斯带通滤波器
+
