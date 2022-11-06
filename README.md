@@ -767,3 +767,45 @@ $$
 
 ### 傅里叶变换
 
+#### Numpy中的傅里叶变换
+
+$$
+F(u,v)=\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}f(x,y)e^{-j2\pi(ux/M+vy/N)}
+$$
+
+$$
+f(x,y)=\sum_{u=0}^{M-1}\sum_{v=0}^{N-1}F(u,v)e^{-j2\pi(ux/M+vy/N)}
+$$
+
+`np.fft.fft2(src, n = None, axis = -1, norm = None)`
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/傅里叶变换.png)
+
+#### OpenCV中的傅里叶变换
+
+`dst = cv2.dft(src, flags, nonzeroRows=0)`
+
+flags:
+
+|     标识符名称     |       意义       |
+| :----------------: | :--------------: |
+|    DFT_INVERSE     |  一维或二维变换  |
+|     DFT_SCALE      |     缩放比例     |
+|      DFT_ROWS      |     三维变换     |
+| DFT_COMPLEX_OUTPUT | 一维或二维正变换 |
+|  DFT_REAL_OUTPUT   | 一维或二维反变换 |
+
+傅里叶逆变换
+
+`iimg = cv2.idft(dft)`
+
+求傅里叶逆变换后二维图像的幅值函数
+
+`res2 = cv2.magnitude(x, y)`
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin.png" alt="a+b" style="zoom:50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/FFT.png" alt="a+b" style="zoom:50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/IFFT.png" alt="a+b" style="zoom:50%;" />
+
+### 低通滤波
+
+#### 理想低通滤波
+
