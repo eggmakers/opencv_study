@@ -863,3 +863,30 @@ $$
 
 高斯带通滤波器
 
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Ideal_bandpass.png)
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/gaussian_bandpass.png)
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/butterworth_bandpass.png)
+
+#### 带阻滤波
+
+把一范围的频率全部削掉，其他信息不滤波
+
+理想带阻滤波器
+
+巴特沃斯带阻滤波器
+
+高斯带阻滤波器
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Ideal_bandstop.png)
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/gaussian_bandstop.png)
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/butterworth_bandstop.png)
+
+### 同态滤波
+
+将非线性的信号重新组合成线性信号
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/homo_filtering.png)
