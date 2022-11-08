@@ -47,13 +47,21 @@ def poisson_noise(img):
     noisy = np.random.poisson(img * vals) / float(vals)
     return noisy
 
-def speckle_noise(img, gauss):
-    #乘性噪声 out = image + n x image
-    row,col,ch = img.shape
-    gauss = np.random.randn(row, col, ch)
-    gauss = gauss.reshape(row, col, ch)
-    noise = img + img * gauss
-    return noise
+def mul_noise(o_img, standard_deviation):
+    #乘性噪声
+    gaussian_noise = np.random.normal(loc=0, scale=standard_deviation, size=o_img.shape)
+    r = o_img.shape[0]
+    c = o_img.shape[1]
+    noisy_img = np.zeros((r, c), dtype=np.uint8)
+    for i in range(r):
+        for j in range(c):
+            # apply noise for every pixel
+            noise = o_img[i, j] * (1 + gaussian_noise[i, j])
+            if noise < 0:
+                noise = 0
+            elif noise > 255:
+                noise = 255
+            noisy_img[i, j] = noise
 
 def rayleigh_noise(img):
     #瑞利噪声
