@@ -763,6 +763,8 @@ $$
 
 <img src="F:/Users/14024/Desktop/opencv_study/result/Origin7.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Unsharp mask.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/High freq.png" alt="a+b" style="zoom: 50%;" />
 
+####  练习见代码
+
 ## 图像频域滤波
 
 ### 傅里叶变换
@@ -890,3 +892,78 @@ $$
 将非线性的信号重新组合成线性信号
 
 ![a+b](F:/Users/14024/Desktop/opencv_study/result/homo_filtering.png)
+
+## 图像退化和还原
+
+图像退化是指图像因为某种原因变得不正常，有模糊，失真，有噪声
+
+图像复原是指将图像建立退化模型，在进行反向推演，最终达到图像复原的目的
+
+### 图像的运动模糊
+
+$$
+\int_{0}^{T} f[(x-x_0(t)),(y-y_0(t))] dx
+$$
+
+模型函数为motion_process(img_size, motion_angle)，包含两个参数：图像尺寸和运动角度
+
+a<=45°时
+
+`PSF[int(center_position+offset), int(center_postion-offset)]=1`
+
+a>45°时
+
+`PSF[int(center_position-offset), int(center_postion+offset)]=1`
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/blur image.png)
+
+### 图像的逆滤波
+
+逆滤波是一种无约束的图像复原算法，其目标是找最优估计图像
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/inverse.png)
+
+### 图像的维纳滤波
+
+是基于最小均方差准则提出的最佳线性滤波方法，滤波输出与期望输出的均方误差为最小，是一个最佳滤波系统
+
+公式如下：
+$$
+F(u,v)=\frac{H(u,v)^*}{H^2(u,v)+k}G(u,v)
+$$
+![a+b](F:/Users/14024/Desktop/opencv_study/result/wiener.png)
+
+### 图像质量的评价
+
+均方误差：MSE
+
+```python
+def mse(img1, img2):
+    mse = np.mean((img1 / 255. - img2 / 255.) ** 2)
+    return mse
+```
+
+峰值信噪比：PSNR
+$$
+PSNR = 10log_{10}\frac{MaxValue^2}{MSE}
+$$
+
+```python
+def psnr(img1, img2):
+    mse = np.mean((img1 / 1.0 - img2 / 1.0) ** 2)
+    if mse < 1.0e-10:
+        return 100
+    return 10 * math.log10(255.0 ** 2 /mse)
+```
+
+结构相似性评价方法：SSIM
+$$
+SSIM(x,y)=\frac{2(\mu_x\mu_y+c_1)(2\sigma_{xy}+c_2)}{(\mu_x^2+\mu_y^2+c_1)(\sigma^2_x+\sigma_y^2+c_2)}
+$$
+`scipy.signal.convolve2d(in1, in2, mode = 'full', boundary = 'fill', fillvalue = 0)`
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/blur image.png" alt="a+b" style="zoom:50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Origin8.png" alt="a+b" style="zoom:50%;" />
+
+MSE:134.89508406667613
+PSNR:26.830842377461718
+SSIM:134.89508406667613
