@@ -967,3 +967,26 @@ $$
 MSE:134.89508406667613
 PSNR:26.830842377461718
 SSIM:134.89508406667613
+
+### 练习见代码
+
+## 图像数学形体学
+
+### 结构元素
+
+#### 使用OpenCV生成结果元素
+
+`kernel=cv2.getStructuringElement(shape, ksize[, anchor])`
+
+shape:内核形状
+
+MORPH_RECT:产生矩阵的结构元素
+
+MORPH_ELLIPSEM:产生椭圆的结构元素
+
+MORPH_CROSS:产生十字交叉形的结构元素
+
+ksize:内核的尺寸
+
+anchor:内核锚点的位置
+
