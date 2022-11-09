@@ -990,3 +990,163 @@ ksize:内核的尺寸
 
 anchor:内核锚点的位置
 
+```matlab
+[[1 1 1 1 1]
+ [1 1 1 1 1]
+ [1 1 1 1 1]
+ [1 1 1 1 1]
+ [1 1 1 1 1]]
+[[0 0 1 0 0]
+ [1 1 1 1 1]
+ [1 1 1 1 1]
+ [1 1 1 1 1]
+ [0 0 1 0 0]]
+[[0 0 1 0 0]
+ [0 0 1 0 0]
+ [1 1 1 1 1]
+ [0 0 1 0 0]
+ [0 0 1 0 0]]
+```
+
+使用Numpy生成结构元素
+
+```matlab
+[[1 1 1 1 1]
+ [1 1 1 1 1]
+ [1 1 1 1 1]
+ [1 1 1 1 1]
+ [1 1 1 1 1]]
+[[0 0 1 0 0]
+ [1 1 1 1 1]
+ [1 1 1 1 1]
+ [1 1 1 1 1]
+ [0 0 1 0 0]]
+[[0 0 1 0 0]
+ [0 0 1 0 0]
+ [1 1 1 1 1]
+ [0 0 1 0 0]
+ [0 0 1 0 0]]
+[[1 1 1 1 1]
+ [1 1 1 1 1]
+ [1 1 1 1 1]
+ [1 1 1 1 1]
+ [1 1 1 1 1]]
+[[0 0 1 0 0]
+ [0 1 1 1 0]
+ [1 1 1 1 1]
+ [0 1 1 1 0]
+ [0 0 1 0 0]]
+```
+
+### 腐蚀
+
+指卷积核沿着图像滑动，把物体的边界腐蚀掉。
+
+`dst = cv2.erode(src, element[,anchor[, iterations[, borderType[, borderValue]]]])`
+
+|  输入参数   |          意义           |
+| :---------: | :---------------------: |
+|     src     |      输入的原图像       |
+|   element   |        结构元素         |
+|   anchor    |     结构元素的锚点      |
+| iterations  | 腐蚀操作的次数，默认为1 |
+| borderType  |      边界扩充类型       |
+| borderValue |       边界扩充值        |
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/erode.png)
+
+#### skimage中的腐蚀函数
+
+`dst = skimage.morphology.erosion(image, selem = None)`
+
+selem表示结构元素，用于设定局部区域的形状和大小
+
+如果处理图像为二值图像，则函数为
+
+`dst =  skimage.morphology.binary_erosion(image, selem = None)`
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/morphology.png)
+
+### 膨胀
+
+#### OpenCV中的膨胀函数
+
+`dst = cv2.dilate(src, element[,anchor[, iterations[, borderType[, borderValue]]]])`
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/erode1.png)
+
+#### skimage中的膨胀函数
+
+`dst = skimage.morphology.dilation(image, selem = None)`
+
+如果是二值图像
+
+`dst = skimage.morphology.binary_dilation(image, selem = None) `
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/morphology1.png)
+
+卷积核的形状
+
+|         函数         |   形状   |
+| :------------------: | :------: |
+|   morphlogy.square   |  正方形  |
+|    morphlogy.disk    | 平面圆形 |
+|    morphlogy.ball    |   球形   |
+|    morphlogy.cube    | 立方体形 |
+|  morphlogy.diamond   |  钻石形  |
+| morphlogy.rectangle  |   矩形   |
+|    morphlogy.star    |   星形   |
+|  morphlogy.octagon   |  八角形  |
+| morphlogy.octahedron |  八面体  |
+
+
+
+#### OpenCV形态学处理原型函数
+
+`dst = cv2.morphologyEx(src, op, kernel[,anchor[,iterations[,borderType[,borderValue]]]])`
+
+op为形态学操作的类型，如下：
+
+|          模式          |    描述    |
+| :--------------------: | :--------: |
+|    cv2.MORPH_ERODE     |    腐蚀    |
+|    cv2.MORPH_DILATE    |    膨胀    |
+|     cv2.MORPH_OPEN     |   开运算   |
+|    cv2.MORPH_CLOSE     |   闭运算   |
+|   cv2.MORPH_GRADIENT   |  形态梯度  |
+|    cv2.MORPH_TOPHAT    |  高帽运算  |
+|   cv2.MORPH_BLACKHAT   |  黑帽运算  |
+| c2.MORPH_MORPH_HITMISS | 击中击不中 |
+
+### 开运算
+
+先腐蚀，在膨胀
+
+### 闭运算
+
+先膨胀，再腐蚀
+
+#### opencv函数运算
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/MORPH_OPEN_CLOSE.png)
+
+#### 用skimage函数进行运算
+
+`dst = skimage.morphology.openning(image, selem = None)`
+
+`dst = skimage.morphology.closing(image, selem = None)`
+
+二值图像的处理方式为
+
+`dst = skimage.morphology.binary_openning(image, selem = None)`
+
+`dst = skimage.morphology.binary_closing(image, selem = None)`
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Morphology_Open_Close.png)
+
+### 高帽运算
+
+将原图像减去他的开运算值，开运算可以消除暗背景下的较亮区域，可以得到原图像中灰度较亮的区域。高帽运算的一个作用就是校正不均匀光照，返回比结构元素小的白点
+
+### 黑帽运算
+
