@@ -1150,3 +1150,103 @@ op为形态学操作的类型，如下：
 
 ### 黑帽运算
 
+将原图像减去他的闭运算值，可以删除亮度较高背景下的较暗区域，可以得到原图像中灰度较暗的区域。他能返回比结构化元素小的黑点，且将这些黑点反色
+
+#### opencv函数运算
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/MORPH_TOPHAT.png)
+
+#### skimage函数运算
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/morphology2.png)
+
+### 形态学梯度
+
+是根据膨胀结果减去腐蚀结果的差值，来实现增强结构元素领域中像素的强度，突出高亮区域的外围。形态学梯度的处理结果是图像中物体的边界，看起来像目标对象的轮廓
+
+可以计算的梯度有如下四种：
+
+1）**基本梯度：**膨胀图像减去腐蚀后的图像得到差值图像
+
+2）**内部梯度：**用原图像减去腐蚀后的图像得到差值图像
+
+3）**外部梯度：**膨胀图像剪掉原图像得到的差值图像
+
+4）**方向梯度：**用X方向与Y方向的直线作为结构元素之后得到的图像梯度
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/original9.png" alt="a+b" style="zoom:33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/gradient.png" alt="a+b" style="zoom:33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/internal.png" alt="a+b" style="zoom:33%;" />
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/external.png" alt="a+b" style="zoom:33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/X-direction.png" alt="a+b" style="zoom:33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Y-direction.png" alt="a+b" style="zoom:33%;" />
+
+创建滑动条，调整r结构元素大小和迭代次数i实现梯度运算
+
+试试
+
+```python
+import cv2
+
+def nothing(*args):
+    pass
+
+cv2.namedWindow('morphology', cv2.WINDOW_FREERATIO)
+r, MAX_R = 0, 20#初始半径
+i, MAX_I = 0, 20#初始化迭代次数
+
+#创建滑动条，分别为半径和迭代次数
+cv2.createTrackbar('r', 'morphology', r, MAX_R, nothing)
+cv2.createTrackbar('i', 'morphology', i, MAX_I, nothing)
+
+src = cv2.imread("picture_material/beauty_leg2.jpg")
+while True:
+    r = cv2.getTrackbarPos('r', 'morphology')#获得进度条上的r值
+    i = cv2.getTrackbarPos('i', 'morphology')
+    #创建结构元素
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2 * r + 1, 2 * r + 1))
+    #形态梯度
+    result = cv2.morphologyEx(src, cv2.MORPH_GRADIENT, kernel, iterations = i)
+    #显示效果
+    cv2.imshow('morphology', result)
+    
+    ch = cv2.waitKey(1)
+    if ch == 27:
+        break
+    
+cv2.destroyAllWindows()
+```
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/morphology3.png)
+
+效果还不错
+
+### 灰度形态学
+
+形态学运算应用到灰度图像中，用于提取描述和表示图像的某些特征，如图像边缘提取，平滑处理等
+
+#### 灰度图像的腐蚀运算
+
+腐蚀是取领域的最小值，从而减少高亮区域的面积
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/edge.png)
+
+边界提取的结果
+
+#### 灰度图像的膨胀运算
+
+膨胀是取领域的最大值，从而增大高亮区域的面积
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/dilate1.png)
+
+#### 灰度运算的开闭运算
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/morphology_open.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/morphology_close.png" alt="a+b" style="zoom:33%;" />
+
+### 形态学运算检测图像的边缘和角点
+
+#### 检测图像边缘
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/dilate.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/erode2.png" alt="a+b" style="zoom: 33%;" />
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/absdiff.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/threshold.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/threshold.png" alt="a+b" style="zoom: 33%;" />
+
+#### 检测图像角点
+
