@@ -1250,3 +1250,100 @@ cv2.destroyAllWindows()
 
 #### 检测图像角点
 
+
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/raw_img.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/corners_0.05.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/corners_0.01.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/corners_0.005.png" alt="a+b" style="zoom: 33%;" />
+
+### 击中与击不中运算
+
+`dst = cv2.morphologyEx(src, cv2.MORPH_HITMISS, kernel)`
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/raw_img.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/hit_miss.png" alt="a+b" style="zoom: 33%;" />
+
+## 边缘检测
+
+### Roberts算子
+
+$$
+G_x=f(i,j)-f(i-1,j-1)\\
+G_y=f(i-1,j)-f(i,j-1)\\
+|G(x,y)|=\sqrt{G^2_x+G^2_y}
+$$
+
+函数为
+
+`dst = cv2.filter(src, ddepth, kernel[, anchor[, delta[, borderType]]])`
+
+`dst = cv2.convertScaleAbs(src[,alpha[,beta]])`
+
+`dst = cv2.addWeighted(src1, alpha, src2, beta, gamma[,dtype])`
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Roberts.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Roberts_SP.png" alt="a+b" style="zoom: 50%;" />
+
+### Prewitt算子
+
+是一阶微分算子的边缘检测，结合了差分运算与领域平均的方法。Prewitt算子在检测边缘时，去掉了部分伪边缘，对噪声有平滑作用
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Prewitt.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Prewitt_sp.png" alt="a+b" style="zoom: 50%;" />
+
+### Sobel算子
+
+在prewitt算子的基础上增加了权重的概念，并结合高斯平滑和微积分求导。他认为相邻点的距离对当前像素点的影响是不同的，距离越近，影响越大。从而实现图像锐化并突出边缘轮廓
+
+`dst = cv2.Sobel(src, ddepth, dx, dy[, ksize[,scale[,delta[,borderType]]]])`
+
+dx和dy表示x或y方向求导的阶数
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Sobel X.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Sobel Y.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Sobel Combined.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Sobel X_sp.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Sobel Y_sp.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Sobel Combined_sp.png" alt="a+b" style="zoom: 50%;" />
+
+### 拉普拉斯算子
+
+$$
+\nabla^2f(x,y)=\frac{\delta^2f(x,y)}{\delta x^2}+\frac{\delta^2f(x,y)}{\delta y^2}
+$$
+
+在x方向上：
+$$
+\frac{\delta^2f}{\delta x^2}=f(x+1,y)+f(x-1,y)-2f(x,y)
+$$
+在y方向上：
+$$
+\frac{\delta^2f}{\delta y^2}=f(x,y+1)+f(x,y-1)-2f(x,y)
+$$
+近似为：
+$$
+\nabla^2f(x,y)=f(x+1,y)+f(x-1,y)+f(x,y-1)+f(x,y+1)-4f(x,y)
+$$
+`dst = cv2.Laplacian(src, ddepth, ksize[, scale[,delta[, borderType]]])`
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Laplacian1.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Laplacian3.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Laplacian5.png" alt="a+b" style="zoom: 50%;" />
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Laplacian1_sp.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Laplacian3_sp.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Laplacian5_sp.png" alt="a+b" style="zoom: 50%;" />
+
+### Canny算子
+
+$$
+M(x,y)=\sqrt{g_x^2+g_y^2},\alpha(x,y)=arctan[\frac{g_{xx}}{g_y}]
+$$
+
+`dst = cv2.Canny(src, threshold1, threshold2[,apertureSize[, L2gradient]])`
+
+threshold1表示低阈值
+
+threshold2表示高阈值
+
+apertureSize表示sobel算子大小
+
+L2gradient表示是否用更精确的布尔值计算
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/canny.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Color dst.png" alt="a+b" style="zoom: 50%;" />
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/canny_sp.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Color dst_sp.png" alt="a+b" style="zoom: 50%;" />
+
+### Scharr算子
+
+Scharr算子是对Sobel算子差异性的增强
+
+`dst = cv2.Scharr(src, ddepth, dx, dy[, scale[, delta[, borderType]]])`
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Scharr X.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Scharr Y.png" alt="a+b" style="zoom: 50%;" />![](F:\Users\14024\Desktop\opencv_study\result\Scharr.png)
