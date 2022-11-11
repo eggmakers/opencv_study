@@ -1347,3 +1347,90 @@ Scharr算子是对Sobel算子差异性的增强
 `dst = cv2.Scharr(src, ddepth, dx, dy[, scale[, delta[, borderType]]])`
 
 <img src="F:/Users/14024/Desktop/opencv_study/result/Scharr X.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Scharr Y.png" alt="a+b" style="zoom: 50%;" />![](F:\Users\14024\Desktop\opencv_study\result\Scharr.png)
+
+### Kirsch算子和Robinson算子
+
+Kirsch由八个方向的卷积核构成，代表8个方向，对图像的8个特定边缘方向做出最大相应，最大值作为边缘输出
+
+ROBinson算子也是如此
+
+### 高斯拉普拉斯算子
+
+高斯函数的公式如下：
+$$
+G_\delta(x,y)=exp(-\frac{x^2+y^2}{2\delta^2})
+$$
+LoG算子的表达式如下：
+$$
+LoG =\nabla G_\delta(x,y)=\frac{\delta^2G_\delta(x,y)}{\delta x^2}+\frac{\delta^2G_\delta(x,y)}{\delta y^2}=\frac{x^2+y^2-2\delta^2}{\delta ^4}e^{-(x^2+y^2)/2\delta^2}
+$$
+<img src="F:/Users/14024/Desktop/opencv_study/result/LoG.png" alt="a+b" style="zoom: 50%;" />
+
+### 高斯差分算子
+
+$$
+DoG = G_{\delta_1}-G_{\delta_2}=\frac{1}{2\pi}[\frac{1}{\delta_1^2}e^{-(x^2-y^2)/2\delta_1^2}-\frac{1}{\delta_2^2}e^{-(x^2-y^2)/2\delta_2^2}]
+$$
+
+### 霍夫变换
+
+#### 霍夫变换检测直线
+
+`lines = cv2.HoughLines(img, rho, theta, threshold)`
+
+rho和theta分别是r，theta的精度
+
+threshold是阈值
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/houghlines.png" alt="a+b" style="zoom: 200%;" />
+
+在许多情况下会导致虚假检测，所以有概率霍夫变换
+
+`lines = cv2.HoughLinesP(img, rho, theta, threshold[, minLineLength[, maxLineGap]])`
+
+minLineLength是以像素为单位的最小长度
+
+maxLineGap判定为一条线段的最大允许间隔
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/houghlinesp.png" alt="a+b" style="zoom: 200%;" />
+
+#### 霍夫变换检测圆环
+
+`circles = cv2.HoughCircles(img, method, dp, minDist, param1, param2, minRadius, maxRadius)`
+
+method只有cv2.HOUGH_GRADIENT
+
+dp越大，累加器数组越小
+
+minDist为点到圆中心的最小距离
+
+param1为处理边缘检测的梯度值方法
+
+param2为累加器阈值
+
+minRadius为最小半径
+
+```
+import cv2
+import numpy as np
+
+img = cv2.imread("picture_material/qi.jfif")
+img = cv2.resize(img, (int(img.shape[1]*5), int(img.shape[0]*5)), interpolation=cv2.INTER_AREA)
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+cv2.imshow("origin", gray)
+
+#hough变换
+circles1 = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 
+100, param1 = 100, param2 = 30, minRadius = 5, maxRadius = 200)
+circles = circles1[0, :, :]
+circles = np.uint16(np.around(circles))
+for i in circles[:]:
+    cv2.circle(img, (i[0], i[1]), i[2], (255, 0, 0), 5)#画圆
+    cv2.circle(img, (i[0], i[1]), 2, (255, 0, 255), 10)#画圆心
+    
+cv2.imshow("result",img)
+cv2.waitKey()
+```
+
+效果不是很好
+
