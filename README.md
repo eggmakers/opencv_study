@@ -1346,7 +1346,7 @@ Scharr算子是对Sobel算子差异性的增强
 
 `dst = cv2.Scharr(src, ddepth, dx, dy[, scale[, delta[, borderType]]])`
 
-<img src="F:/Users/14024/Desktop/opencv_study/result/Scharr X.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Scharr Y.png" alt="a+b" style="zoom: 50%;" />![](F:\Users\14024\Desktop\opencv_study\result\Scharr.png)
+<img src="F:/Users/14024/Desktop/opencv_study/result/Scharr X.png" alt="a+b" style="zoom: 50%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Scharr Y.png" alt="a+b" style="zoom: 50%;" /><img src="F:\Users\14024\Desktop\opencv_study\result\Scharr.png" style="zoom:50%;" />
 
 ### Kirsch算子和Robinson算子
 
@@ -1410,18 +1410,18 @@ param2为累加器阈值
 
 minRadius为最小半径
 
-```
+```python
 import cv2
 import numpy as np
 
-img = cv2.imread("picture_material/qi.jfif")
-img = cv2.resize(img, (int(img.shape[1]*5), int(img.shape[0]*5)), interpolation=cv2.INTER_AREA)
+img = cv2.imread("picture_material/coin.jpg")
+# img = cv2.resize(img, (int(img.shape[1]*5), int(img.shape[0]*5)), interpolation=cv2.INTER_AREA)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 cv2.imshow("origin", gray)
 
 #hough变换
 circles1 = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 
-100, param1 = 100, param2 = 30, minRadius = 5, maxRadius = 200)
+100, param1 = 100, param2 = 30, minRadius = 180, maxRadius = 185)
 circles = circles1[0, :, :]
 circles = np.uint16(np.around(circles))
 for i in circles[:]:
@@ -1434,3 +1434,306 @@ cv2.waitKey()
 
 效果不是很好
 
+![a+b](F:/Users/14024/Desktop/opencv_study/result/coin.png)
+
+## 图像分割
+
+### 图像阈值分割
+
+$$
+g(x,y)=
+\left\{  
+             \begin{array}{**lr**}  
+             1 & f(x,y) \geq T\\  
+            0 & f(x,y) \leq T\\      
+             \end{array}  
+\right.
+$$
+
+#### 全局阈值分割
+
+当图像高于某个阈值时赋予白色，低于某个阈值赋予黑色
+
+`dst = cv2.threshold(src, thresh, maxval, type)`
+
+|  函数  |        意义        |
+| :----: | :----------------: |
+| thresh |   阈值 取值0~255   |
+| maxval |  填充色 取值0~255  |
+|  type  | 阈值类型，类型如下 |
+
+|         类型          |           含义            |
+| :-------------------: | :-----------------------: |
+|   cv2.THRESH_BINARY   |          二值化           |
+| cv2.THRESH_BINARY_INV |         反二值化          |
+|   cv2.THRESH_TRUNC    | 截断阈值化，大于阈值设为1 |
+|   cv2.THRESH_TOZERO   | 阈值化为0，小于阈值设为0  |
+| cv2.THRESH_TOZERO_INV |       大于阈值设为0       |
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Figure_13.png)
+
+#### 自适应阈值
+
+自适应阈值二值化函数根据图像的小块区域的值来计算对应区域的阈值，从而得到更为适合的图像
+
+`dst = cv2.adaptiveThreshold(src, maxval, thresh_type, type, Block_Size, C)`
+
+|    参数     |                             含义                             |
+| :---------: | :----------------------------------------------------------: |
+| thresh_type | 计算阈值的方法有如下两种：cv2.ADAPTIVE_THRESH_MEAN_C(平均法)\cv2.ADAPTIVE_THRESH_GAUSSIAN_C(高斯法) |
+|    type     |                           阈值类型                           |
+| Block_Size  |                          分块的大小                          |
+|      C      |                            常数项                            |
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/adaptiveThreshold.png)
+
+#### Otsu's二值化
+
+1）计算图像直方图
+
+2）设置阈值，大于阈值的一组，小于阈值的一组
+
+3）分别计算两组的偏移数
+
+4）把0~255依照顺序设为阈值，重复上述步骤，直到得到最小偏移数
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/otsus.png)
+
+### 图像区域分割
+
+主要方法有区域生长和区域分裂合并法，都是典型的串行区域技术，其后续的处理根据前面的步骤决定
+
+#### 区域生长
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/SeedMark.png)
+
+#### 区域分裂合并
+
+从整个图像出发，不断分裂到各个子区域，然后把前景区域合并，实现目标提取
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/spilitting.png)
+
+### 图像的边缘分割
+
+通过边缘检测，检测灰度级或结构有突变的地方，表明一个区域的终结，也是一个区域的开始
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/binary.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/inv.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/canny1.png" alt="a+b" style="zoom: 33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/inv_canny.png" alt="a+b" style="zoom: 33%;" />
+
+### 直方图分割法
+
+直方图分割法有明显的双峰
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/hist_edge.png)
+
+### 图像连接组件标记算法
+
+**连通组件标记函数**
+
+`retval, labels = cv2.connctedComponents(img, connectivity, ltype)`
+
+img:二值图像
+
+connectivity:8连通域
+
+ltype:输出的labels类型，默认是CV_32S
+
+retval,labels:输出的标记图像
+
+**连通组件状态统计函数**
+
+`retval, labels, stats, centroids = cv2.connectedComponentsWithStats(img, connectivity, ltype)`
+
+其中，在stats中
+
+|      组件      |                 含义                  |
+| :------------: | :-----------------------------------: |
+|  CC_STAT_LEFT  | 连通组件外接矩形左上角坐标的X位置信息 |
+|  CC_STAT_TOP   | 连通组件外接矩形左上角坐标的Y位置信息 |
+| CC_STAT_WIDTH  |         连通组件外接矩形宽度          |
+| CC_STAT_HEIGHT |         连通组件外接矩形高度          |
+|  CC_STAT_AREA  |          连通组件的面积大小           |
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/colors labels.png)
+
+## 彩色图像的处理
+
+### 彩色模型
+
+RGB模型（通用模型）
+
+CMY模型（青，品红，黄）和CMYK模型（青，品红，黄，黑）用于彩色打印机
+
+HSI模型（色调，亮度，饱和度）人类描述的颜色
+
+CIE模型
+
+#### RGB彩色模型
+
+RGB彩色模型基于笛卡尔坐标系，8个顶点颜色如下
+
+| 彩色名称 |  R   |  G   |  B   |
+| :------: | :--: | :--: | :--: |
+|    黑    |  0   |  0   |  0   |
+|    蓝    |  0   |  0   |  1   |
+|    绿    |  0   |  1   |  0   |
+|   蓝绿   |  0   |  1   |  1   |
+|    红    |  1   |  0   |  0   |
+|   品红   |  1   |  0   |  1   |
+|    黄    |  1   |  1   |  0   |
+|    白    |  1   |  1   |  1   |
+
+#### CMY和CMYK模型
+
+CMY转换为CMYK的公式为
+
+```
+K = min(C,M,Y)
+C = C - K
+M = M - K
+Y = Y - K
+```
+
+
+
+#### HSI彩色模型
+
+RGB转换为HSI模型公式
+$$
+I=\frac{1}{3}(R+G+B)\\
+S = 1-\frac{1}{(R+G+B)}[min(R,G,B)]\\
+H=\left\{  
+             \begin{array}{**lr**}  
+             \theta & G \geq B\\  
+            2\pi - \theta & G<B\\      
+             \end{array}  
+\right.\\
+其中：\\
+\theta=arccos(\frac{\frac{1}{2}[(R-G)+(R-B)]}{[(R-G)^2+(R-B)(G-B)^{\frac{1}{2}}]})
+$$
+HSI转换为RGB模型公式
+
+当H在[0,2Π/3]时
+$$
+B=I(1-S)\\
+R=I[1+\frac{ScosH}{cos(\frac{\pi}{3}-H)}]\\
+G=3I-(B+R)
+$$
+当H在[2Π/3,4Π/3]时
+$$
+R=I(1-S)\\R=I[1+\frac{Scos(H-\frac{2\pi}{3})}{cos(\pi-H)}]\\G=3I-(B+R)
+$$
+当H在[4Π/3,2Π]时
+$$
+G=I(1-S)\\
+R=I[1+\frac{Scos(H-\frac{4\pi}{3})}{cos(\frac{5\pi}{3}-H)}]\\
+R=3I-(B+G)
+$$
+
+#### YIQ彩色模型
+
+RGB到YIQ转换公式为
+$$
+\left[
+\begin{matrix}
+Y\\
+I\\
+Q
+\end{matrix}
+\right]
+=
+\left[
+\begin{matrix}
+0.299 & 0.587 & 0.114\\
+0.596 & -0.274 & -0.322\\
+0.211 & -0.253 & 0.312
+\end{matrix}
+\right]
+\left[
+\begin{matrix}
+R\\
+G\\
+B
+\end{matrix}
+\right]
+$$
+
+#### YCrCb彩色模型
+
+$$
+\left[
+\begin{matrix}
+Y\\
+Cb\\
+Cr
+\end{matrix}
+\right]
+=
+\left[
+\begin{matrix}
+0.299 & 0.587 & 0.114\\
+-0.169 & -0.331 & -0.500\\
+0.500 & -0.419 & -0.312
+\end{matrix}
+\right]
+\left[
+\begin{matrix}
+R\\
+G\\
+B
+\end{matrix}
+\right]
+$$
+
+### 色彩空间类型转换
+
+`img = cv2.cvtColor(src, code, dstCn)`
+
+#### RGB色彩空间
+
+#### GRAY色彩空间
+
+这个我就不写了啊，做的太多了
+
+#### YCrCb色彩空间
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/YCrCb.png)
+
+#### HSV色彩空间
+
+$$
+S=
+\left\{  
+             \begin{array}{**lr**}  
+             \frac{V-min(R,G,B)}{V} & V不等于0\\  
+            0 & 其他\\      
+             \end{array}  
+\right.\\
+H=
+\left\{  
+             \begin{array}{**lr**}  
+             \frac{60(G-B)}{V-min(R,G,B)} & V=R\\  
+            120+\frac{60(B-R)}{V-min(R,G,B)} & V=G\\    
+            240+\frac{60(R-G)}{V-min(R,G,B)} & V=G\\  
+             \end{array}  
+\right.\\
+其中：\\
+V=max(R,G,B)\\
+H<0时\\
+H=
+\left\{  
+             \begin{array}{**lr**}  
+             H+360 & H<0\\  
+            H & 其他\\     
+             \end{array}  
+\right.\\
+$$
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/HSV.png)
+
+### 彩色图像通道的分离与合并
+
+#### 彩色图像通道的分离
+
+`b,g,r=cv2.split(src)`
+
+<img src="F:/Users/14024/Desktop/opencv_study/result/Origin6.png" alt="a+b" style="zoom:33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Red.png" alt="a+b" style="zoom:33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Green.png" alt="a+b" style="zoom:33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Blue.png" alt="a+b" style="zoom:33%;" />
