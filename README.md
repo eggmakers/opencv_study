@@ -1737,3 +1737,235 @@ $$
 `b,g,r=cv2.split(src)`
 
 <img src="F:/Users/14024/Desktop/opencv_study/result/Origin6.png" alt="a+b" style="zoom:33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Red.png" alt="a+b" style="zoom:33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Green.png" alt="a+b" style="zoom:33%;" /><img src="F:/Users/14024/Desktop/opencv_study/result/Blue.png" alt="a+b" style="zoom:33%;" />
+
+带颜色的RGB三通道图像
+
+<img src="F:\Users\14024\Desktop\opencv_study\result\R_img.png" style="zoom:33%;" /><img src="F:\Users\14024\Desktop\opencv_study\result\G_img.png" style="zoom:33%;" /><img src="F:\Users\14024\Desktop\opencv_study\result\B_img.png" style="zoom:33%;" />
+
+#### 彩色图像通道的合并
+
+`merged = cv2.merge([b, g, r])`
+
+### 全彩色图像处理
+
+#### 直方图处理
+
+`img = cv2.equalizeHist(src)`
+
+`matplotlib.pyplot.hist(img,BINS)`
+
+#### 彩色图像的平滑和锐化
+
+#### 基于彩色的图像分割
+
+这两个以前做过，这里不赘述
+
+## 图像特征的提取与描述
+
+### 图像轮廓特征
+
+#### 图像轮廓的查找和绘制
+
+`contours, hierarchy = cv2.findContours(image, mode, method[, contours[, hierarchy[, offset]]])`
+
+image为输入的图像，mode为轮廓检索模式
+
+|     模式      |             说明             |
+| :-----------: | :--------------------------: |
+| RETR_EXTERNAL |      只检索最外面的轮廓      |
+|   RETR_LIST   |  检索所有轮廓，保存在list中  |
+|  RETR_CCOMP   |  检索所有的轮廓，并分为两层  |
+|   RETR_TREE   | 检查所有轮廓，并重构整个层次 |
+
+第二个参数是方法：
+
+|            参数            |            意义             |
+| :------------------------: | :-------------------------: |
+|   cv2.CHAIN_APPROX_NONE    |        显示所有轮廓         |
+|  cv2.CHAIN_APPROX_SIMPLE   |         只保留端点          |
+|  cv2.CHAIN_APPROX_TX89_L1  |    使用teh-Chinl近似算法    |
+| cv2.CHAIN_APPROX_TC89_KCOS | 使用teh-Chinl chain近似算法 |
+
+轮廓绘制函数
+
+`cv2.drawCountours(img, countours, -1, (0, 0, 255), 2)`
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Contour img.png)
+
+#### 带噪声的轮廓
+
+#### 边缘检测后的轮廓
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/drawcontours_edge.png)
+
+### 图像的几何特征
+
+面积
+
+`area = cv2.contoursArea(cnt, True)`
+
+True表示是闭合轮廓还是曲线
+
+周长
+
+`perimeter = cv2.arcLength(cnt, True)`
+
+输出
+
+Area =  368095.0 Length =  2528.0
+
+#### 外接矩形
+
+##### 直角矩形
+
+最上面，最下面，最左边和最右边的点的坐标
+
+`x, y, w, h = cv2.boundingRect(cnt)`
+
+左上角的坐标和矩形的宽和高
+
+`img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)`
+
+##### 旋转矩形
+
+`min_rect = cv2.minAreaRect(cnt)`
+
+实现方法：
+
+```python
+rect = cv2.minAreaRect(cnt)
+box = cv2.boxPoints(rect)
+box = np.int0(box)
+cv2.drawContours(img, [box], 0, (0, 0, 255), 2)
+```
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Rectangles.png)
+
+### 最小外接圆和椭圆
+
+#### 最小外接圆
+
+获得圆的半径和坐标
+
+`(x, y), radius = cv2.minEnclosingCircle(cnt)`
+
+画圆
+
+`cv2.cirlce(img, center, radius, color[, thickness[, lineType[, shift]]])`
+
+thickness:圆的厚度
+
+lineType:圆边界的类型
+
+shift:中心坐标和半径值的小数位数
+
+#### 内接椭圆
+
+`ellipse = cv2.fitEllipse(cnt)`
+
+ellipse是长短轴的长度
+
+画椭圆
+
+cv2.ellipse(img, center, axes, angle, startAngle, endAngle, color[, thickness[, lineType[, shift]]])
+
+axes:椭圆尺寸
+
+angle:旋转角度
+
+startAngle:起始角度
+
+endAngle:终止角度
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/draw circle.png)
+
+#### 近似轮廓
+
+`cv2.aprroxPolyDP(cnt, epsilon, True)`
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/approxPloyDP 0.1%.png)
+
+#### 轮廓凸包
+
+`hull = cv2.convexHull(points, clockwise, returnpoints)`
+
+clockwise表示顺时针或是逆时针
+
+returnpoints为False表示返回缺陷点
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/line & points.png)
+
+#### 拟合直线
+
+`[vx, vy, x, y] = cv2.fitLine(points, distType, param, reps, aeps)`
+
+points:待拟合的直线合集
+
+distType:距离类型
+
+|     函数      |                      类型                      |
+| :-----------: | :--------------------------------------------: |
+| cv2.DIST_USER |                   自定义距离                   |
+|  cv2.DIST_L1  |                     1范数                      |
+|  cv2.DIST_L2  |                     2范数                      |
+|  cv2.DIST_C   |                    无穷范数                    |
+| cv2.DIST_L12  |      distance=2(sqrt(1 + x * x / 2)  - 1)      |
+| cv2.DIST_FAIR | distance=c^2(\|x\|/c-log(1+\|x\|/c))  c=1.3998 |
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/Line.png)
+
+### 图像特征矩
+
+特征矩包括信息有：大小，位置，角度， 形状等被广泛的用在模式识别和图像分类方面
+
+获得矩特征：
+
+`retval = cv2.moments(array[, binaryImage])`
+
+#### Hu矩
+
+Hu矩是归一化中心距的线性组合，是进行旋转，缩放，平移后仍能保持矩的不变性
+
+`hu = cv2.HuMoments(m)`
+
+#### 形状匹配
+
+'dist = cv2.matchShapes(contour1, contour2, method, parameter)'
+
+可用于数字识别
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/matchshape.png)
+
+效果不好
+
+### 图像匹配
+
+#### ORB特征检测+暴力检测
+
+`orb = cv2.ORB_create()`
+
+暴力匹配
+
+`bf = cv2.BFMatcher(normType = cv2.NORM_HAMMING, crossCherk = True)`
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/matches.png)
+
+### 搜索匹配的图像
+
+# 综合应用实例
+
+## 1.车辆识别
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/video.png)
+
+## 2.人脸识别
+
+### Haar人脸识别
+
+创建Haar级联器
+
+导入图片并将其灰度化
+
+调用detectMultiScale方法进行人脸识别
+
+`detectMultiScale(img, double scaleFactor = 1.1, int Neighbors = 3)`
