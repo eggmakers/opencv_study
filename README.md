@@ -1969,3 +1969,96 @@ Hu矩是归一化中心距的线性组合，是进行旋转，缩放，平移后
 调用detectMultiScale方法进行人脸识别
 
 `detectMultiScale(img, double scaleFactor = 1.1, int Neighbors = 3)`
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/face.png)
+
+#### 眼部识别
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/eye.png)
+
+## 3.车牌识别
+
+车牌二值化处理
+
+形态学处理
+
+低通滤波去噪点 
+
+缩放
+
+![a+b](F:/Users/14024/Desktop/opencv_study/result/plate.png)![a+b](F:/Users/14024/Desktop/opencv_study/result/roi_bin.png)
+
+# 深度学习基础
+
+## 1.学习网络模型
+
+DNN（深度神经网络）
+
+RNN（循环神经网络）
+
+CNN（卷积神经网络）
+
+### RNN
+
+语音识别
+
+机器翻译
+
+生成图像描述
+
+### CNN
+
+图像分类检索
+
+目标定位检测
+
+目标分割
+
+人脸识别
+
+## 2.OPENCV支持的模型
+
+TensorFlow
+
+Pytorch/torch
+
+Caffe
+
+DarkNet
+
+## 3.DNN使用步骤
+
+1.读取模型，得到深度学习网络
+
+2.读取图片/视频
+
+3.将图片转换成张量，送入深度神经网络
+
+4.分析并得到结果
+
+**导入模型**
+
+```python
+readNetFromTensorflow(model, config)#模型+参数
+readNetFromTensorCaffe(config, model)	
+readNetDarknet,YOLO
+readnet(model, [config,[framework]])#framework：框架（可不写）
+```
+
+**转换张量**
+
+```python
+blobFromImage(img, scalefactor = 1.0, size = Size(), mean = Scalar(), swapRB = false, crop = false)
+```
+
+mean:减去光照均值
+
+**将张量送入网络并执行**
+
+```
+net.setInput(blob)
+net.forward()
+```
+
+
+
